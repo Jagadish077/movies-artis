@@ -51,8 +51,10 @@ public class MoviesDao {
 	}
 
 	public Optional<List<TopRatedMovies>> getMoviesOnAverageRating(Double averageRating, Connection conn) {
-		try(PreparedStatement ps = conn.prepareStatement(MovieUtil.GET_LONG_DURATION_MOVIES)) {
+		try(PreparedStatement ps = conn.prepareStatement(MovieUtil.GET_LIST_OF_MOVIES_ON_AVERAGE_RATINGS)) {
+			ps.setDouble(1, averageRating);
 			try(ResultSet rs = ps.executeQuery()) {
+				
 				List<TopRatedMovies> topRatedMovies = new ArrayList<>();
 				while(rs.next()) {
 					topRatedMovies.add(new TopRatedMovies(rs.getString(Keys.tconst), rs.getString(Keys.primaryTitle), rs.getString(Keys.genres), rs.getDouble(Keys.averageRating)));
@@ -63,5 +65,14 @@ public class MoviesDao {
 			e.printStackTrace();
 		}
 		return Optional.empty();
+	}
+	
+	public Boolean incrementMovies(Connection conn) {
+		try(PreparedStatement ps = conn.prepareStatement(MovieUtil.INCREMENT_MOVIES)) {
+			return ps.executeUpdate() > 0 ? true : false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

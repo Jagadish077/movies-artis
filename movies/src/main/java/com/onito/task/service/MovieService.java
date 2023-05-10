@@ -29,4 +29,8 @@ public class MovieService {
 	public Optional<List<TopRatedMovies>> getTopRatedMovies(Double averageRating, Connection conn) {
 		return moviesDao.getMoviesOnAverageRating(averageRating, conn);
 	}
+	
+	public Boolean incrementMovies(Connection conn) {
+		return moviesDao.incrementMovies(conn);
+	}
 }

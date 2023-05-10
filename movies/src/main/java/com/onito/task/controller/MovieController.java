@@ -62,7 +62,7 @@ public class MovieController implements WebMvcConfigurer{
 		throw new InvalidRequestException("Failed to add movie");
 	}
 	
-	@PostMapping("/top-rated-movies")
+	@GetMapping("/top-rated-movies")
 	public GenericResponse<GenericResponseModel<List<TopRatedMovies>, ErrorResponse>> getTopRatedMovies(Double averageRating) throws SQLException {
 		try(Connection conn = connectionPool.getConnection()) {
 			Optional<List<TopRatedMovies>> optionalTopRatedMovies = movieService.getTopRatedMovies(averageRating, conn);
@@ -73,4 +73,14 @@ public class MovieController implements WebMvcConfigurer{
 		throw new NoDataFoundException("No Data found");
 	}
 
+	@PostMapping("/update-runtime-minutes")
+	public GenericResponse<GenericResponseModel<String, ErrorResponse>> incrementRuntimeMinutes() throws SQLException {
+		try (Connection conn = connectionPool.getConnection()) {
+			Boolean isIncremented = movieService.incrementMovies(conn);
+			if (isIncremented) {
+				return new GenericResponse<>(new GenericResponseModel<>("Success", null), HttpStatus.OK);
+			}
+		}
+		return new GenericResponse<>(new GenericResponseModel<>("Failed", null), HttpStatus.BAD_REQUEST);
+	}
 }
