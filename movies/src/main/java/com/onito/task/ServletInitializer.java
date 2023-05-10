@@ -1,4 +1,4 @@
-package com.onito.movies;
+package com.onito.task;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

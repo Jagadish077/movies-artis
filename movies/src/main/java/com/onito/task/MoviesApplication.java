@@ -1,4 +1,4 @@
-package com.onito.movies;
+package com.onito.task;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
