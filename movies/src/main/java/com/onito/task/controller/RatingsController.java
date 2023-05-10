@@ -5,6 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Validated
-public class ArtistController {
+public class RatingsController {
 
 }
