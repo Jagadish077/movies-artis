@@ -21,6 +21,7 @@ import com.onito.task.exceptionhandler.NoDataFoundException;
 import com.onito.task.model.ErrorResponse;
 import com.onito.task.model.GenericResponse;
 import com.onito.task.model.GenericResponseModel;
+import com.onito.task.model.GenreMoviesOfSubtotal;
 import com.onito.task.model.LongestDurationMovies;
 import com.onito.task.model.NewMovie;
 import com.onito.task.model.TopRatedMovies;
@@ -73,6 +74,17 @@ public class MovieController implements WebMvcConfigurer{
 		throw new NoDataFoundException("No Data found");
 	}
 
+	@GetMapping("/genre-movies-with-subtotals")
+	public GenericResponse<GenericResponseModel<List<GenreMoviesOfSubtotal>, ErrorResponse>> getAllMoviesByGenres() throws SQLException {
+		try (Connection conn = connectionPool.getConnection()) {
+			Optional<List<GenreMoviesOfSubtotal>> optionalGenreMoviesOfSubtotal = movieService.getGenreMoviesWithSubtotal(conn);
+			if (optionalGenreMoviesOfSubtotal.isPresent()) {
+				return new GenericResponse<>(new GenericResponseModel<>(optionalGenreMoviesOfSubtotal.get(), null), HttpStatus.OK);
+			}
+		}
+		throw new NoDataFoundException("No Data Found");
+	}
+	
 	@PostMapping("/update-runtime-minutes")
 	public GenericResponse<GenericResponseModel<String, ErrorResponse>> incrementRuntimeMinutes() throws SQLException {
 		try (Connection conn = connectionPool.getConnection()) {

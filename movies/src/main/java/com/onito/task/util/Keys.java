@@ -7,5 +7,7 @@ public interface Keys {
 	public String runtimeMinutes = "runtimeMinutes";
 	public String genres = "genres";
 	public String averageRating = "averageRating";
+	public String numVotes = "numVotes";
+	public String total = "total";
 	
 }
